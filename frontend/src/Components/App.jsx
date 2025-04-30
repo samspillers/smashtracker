@@ -5,6 +5,7 @@ import React from "react";
 
 export default class App extends React.Component {
     render() {
+        console.log(process.env.GOOGLE_CLIENT_ID);
         return <p>test</p>
         // return <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
         //     <Main/>
