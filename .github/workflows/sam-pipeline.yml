@@ -6,8 +6,11 @@ on:
             - backend/**
 jobs:
     build-deploy:
-      runs-on: ubuntu-latest
-      steps:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./backend
+        steps:
         - uses: actions/checkout@v3
         - uses: actions/setup-python@v3
         - uses: aws-actions/setup-sam@v2
@@ -18,4 +21,4 @@ jobs:
             aws-region: us-west-2
         - run: sam validate --lint
         - run: sam build --use-container
-        - run: sam deploy --s3-bucket aws-lambda-deployment-package-1 --no-confirm-changeset --no-fail-on-empty-changeset --stack-name rpslambdas --capabilities CAPABILITY_IAM --region us-west-2
+        - run: sam deploy --s3-bucket aws-lambda-deployment-package-1 --no-confirm-changeset --no-fail-on-empty-changeset --stack-name smashTracker --capabilities CAPABILITY_IAM --region us-west-2

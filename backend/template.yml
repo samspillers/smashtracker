@@ -61,8 +61,8 @@ Resources:
       - x86_64
       Layers:
         - !Ref commonLayer
-      # Role:
-      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Role:
+        arn:aws:iam::710104224671:role/smash-tracker-lambda-access-to-dynamo
       Events:
         GetUser:
           Type: Api
@@ -80,8 +80,8 @@ Resources:
       - x86_64
       Layers:
         - !Ref commonLayer
-      # Role:
-      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Role:
+        arn:aws:iam::710104224671:role/smash-tracker-lambda-access-to-dynamo
       Events:
         PostPlayer:
           Type: Api
@@ -99,8 +99,8 @@ Resources:
       - x86_64
       Layers:
         - !Ref commonLayer
-      # Role:
-      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Role:
+        arn:aws:iam::710104224671:role/smash-tracker-lambda-access-to-dynamo
       Events:
         ListPlayer:
           Type: Api
@@ -118,8 +118,8 @@ Resources:
       - x86_64
       Layers:
         - !Ref commonLayer
-      # Role:
-      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Role:
+        arn:aws:iam::710104224671:role/smash-tracker-lambda-access-to-dynamo
       Events:
         PutGame:
           Type: Api
