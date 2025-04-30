@@ -1,0 +1,129 @@
+# Use the following to check file is valid:
+# sam validate --lint
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  smashtracker
+
+  all aws resources for the smashtracker app
+
+Globals:
+  Function:
+    Timeout: 3
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS'"
+      AllowHeaders: "'content-type,authorization'"
+      AllowOrigin: "'*'" # TODO: Change to specically web app before release
+      # AllowOrigin: "'https://main.d2sjn7hd1qsgvi.amplifyapp.com/'" 
+
+Resources:
+  smashTrackerApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: Smash Tracker Serverless API
+      StageName: Prod
+      Auth:
+        DefaultAuthorizer: LambdaTokenAuthorizer
+        AddDefaultAuthorizerToCorsPreflight: false
+        Authorizers:
+          LambdaTokenAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt authorizer.Arn
+            Identity:
+              Headers:
+                - Authorization
+  commonLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: common-layer
+      ContentUri: ./common-layer/
+      CompatibleRuntimes:
+        - nodejs18.x
+  authorizer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./authorizer
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Layers:
+        - !Ref commonLayer
+  getUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./user/get-user/
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Layers:
+        - !Ref commonLayer
+      # Role:
+      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Events:
+        GetUser:
+          Type: Api
+          Properties:
+            Path: /user
+            Method: get
+            RestApiId: !Ref smashTrackerApi
+  postPlayer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./player/post-user/
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Layers:
+        - !Ref commonLayer
+      # Role:
+      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Events:
+        PostPlayer:
+          Type: Api
+          Properties:
+            Path: /player
+            Method: post
+            RestApiId: !Ref smashTrackerApi
+  listPlayer:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./player/list-player/
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Layers:
+        - !Ref commonLayer
+      # Role:
+      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Events:
+        ListPlayer:
+          Type: Api
+          Properties:
+            Path: /player
+            Method: get
+            RestApiId: !Ref smashTrackerApi
+  putGame:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./game/put-game/
+      Handler: app.lambdaHandler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Layers:
+        - !Ref commonLayer
+      # Role:
+      #   arn:aws:iam::710104224671:role/rps-lambda-access-to-dynamo TODO
+      Events:
+        PutGame:
+          Type: Api
+          Properties:
+            Path: /game
+            Method: put
+            RestApiId: !Ref smashTrackerApi
