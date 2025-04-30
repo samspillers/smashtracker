@@ -73,7 +73,7 @@ Resources:
   postPlayer:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./player/post-user/
+      CodeUri: ./player/post-player/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
       Architectures:
