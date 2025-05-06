@@ -16,7 +16,7 @@ Globals:
       AllowMethods: "'GET,POST,OPTIONS'"
       AllowHeaders: "'content-type,authorization'"
       AllowOrigin: "'*'" # TODO: Change to specically web app before release
-      # AllowOrigin: "'https://main.d2sjn7hd1qsgvi.amplifyapp.com/'" 
+      # AllowOrigin: "'https://main.d19rk0obs9bcs6.amplifyapp.com/'" 
 
 Resources:
   smashTrackerApi:
