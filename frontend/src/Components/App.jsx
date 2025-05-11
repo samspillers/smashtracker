@@ -3,10 +3,11 @@ import React from "react";
 export default class App extends React.Component {
     componentDidMount() {
         console.log(process.env.NODE_ENV);
+        console.log('REACT_APP_GOOGLE_CLIENT_ID', process.env.REACT_APP_GOOGLE_CLIENT_ID);
+        console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
         // console.log(process.env.AMPLIFY_DIFF_DEPLOY);
         // console.log(process.env.AMPLIFY_MONOREPO_APP_ROOT);
         // console.log(process.env);
-        console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
         // const client = gapi.auth2.init({})
 
